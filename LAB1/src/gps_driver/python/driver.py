@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
 	port = serial.Serial(serial_port, serial_baud, timeout=3.)
 
-	gps_pub = rospy.Publisher('gps_driver_data',gps_msg, queue_size=10)
+	gps_pub = rospy.Publisher('gps',gps_msg, queue_size=10)
 	
 	try:
 		while not rospy.is_shutdown():
@@ -66,6 +66,7 @@ if __name__ == '__main__':
 					
 					gps_msg_fields.Latitude = lat_dec
 					gps_msg_fields.Longitude = lon_dec
+					gps_msg_fields.HDOP = gps_data_input[8]
 					gps_msg_fields.Altitude = float(gps_data_input[9])
 					gps_msg_fields.UTM_northing = UTM_conv[1]
 					gps_msg_fields.UTM_easting = UTM_conv[0]
@@ -76,6 +77,7 @@ if __name__ == '__main__':
 					gps_msg_fields.Header.stamp.secs = int(time_sec)
 					time_nsec = float(time[6:])*10e9
 					gps_msg_fields.Header.stamp.nsecs = int(time_nsec)
+					
 					gps_msg_fields.Header.frame_id = 'GPS1_Frame'
 					
 					gps_pub.publish(gps_msg_fields)
