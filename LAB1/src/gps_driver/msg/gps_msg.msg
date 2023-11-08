@@ -4,5 +4,6 @@ float64 Longitude
 float64 Altitude
 float64 UTM_easting
 float64 UTM_northing
+float64 HDOP
 int64 Zone
 string Letter

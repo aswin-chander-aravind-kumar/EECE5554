@@ -16,7 +16,7 @@
 
 (defclass gps_driver::gps_msg
   :super ros::object
-  :slots (_Header _Latitude _Longitude _Altitude _UTM_easting _UTM_northing _Zone _Letter ))
+  :slots (_Header _Latitude _Longitude _Altitude _UTM_easting _UTM_northing _HDOP _Zone _Letter ))
 
 (defmethod gps_driver::gps_msg
   (:init
@@ -27,6 +27,7 @@
     ((:Altitude __Altitude) 0.0)
     ((:UTM_easting __UTM_easting) 0.0)
     ((:UTM_northing __UTM_northing) 0.0)
+    ((:HDOP __HDOP) 0.0)
     ((:Zone __Zone) 0)
     ((:Letter __Letter) "")
     )
@@ -37,6 +38,7 @@
    (setq _Altitude (float __Altitude))
    (setq _UTM_easting (float __UTM_easting))
    (setq _UTM_northing (float __UTM_northing))
+   (setq _HDOP (float __HDOP))
    (setq _Zone (round __Zone))
    (setq _Letter (string __Letter))
    self)
@@ -62,6 +64,9 @@
   (:UTM_northing
    (&optional __UTM_northing)
    (if __UTM_northing (setq _UTM_northing __UTM_northing)) _UTM_northing)
+  (:HDOP
+   (&optional __HDOP)
+   (if __HDOP (setq _HDOP __HDOP)) _HDOP)
   (:Zone
    (&optional __Zone)
    (if __Zone (setq _Zone __Zone)) _Zone)
@@ -82,6 +87,8 @@
     ;; float64 _UTM_easting
     8
     ;; float64 _UTM_northing
+    8
+    ;; float64 _HDOP
     8
     ;; int64 _Zone
     8
@@ -104,6 +111,8 @@
        (sys::poke _UTM_easting (send s :buffer) (send s :count) :double) (incf (stream-count s) 8)
      ;; float64 _UTM_northing
        (sys::poke _UTM_northing (send s :buffer) (send s :count) :double) (incf (stream-count s) 8)
+     ;; float64 _HDOP
+       (sys::poke _HDOP (send s :buffer) (send s :count) :double) (incf (stream-count s) 8)
      ;; int64 _Zone
 #+(or :alpha :irix6 :x86_64)
        (progn (sys::poke _Zone (send s :buffer) (send s :count) :long) (incf (stream-count s) 8))
@@ -134,6 +143,8 @@
      (setq _UTM_easting (sys::peek buf ptr- :double)) (incf ptr- 8)
    ;; float64 _UTM_northing
      (setq _UTM_northing (sys::peek buf ptr- :double)) (incf ptr- 8)
+   ;; float64 _HDOP
+     (setq _HDOP (sys::peek buf ptr- :double)) (incf ptr- 8)
    ;; int64 _Zone
 #+(or :alpha :irix6 :x86_64)
       (setf _Zone (prog1 (sys::peek buf ptr- :long) (incf ptr- 8)))
@@ -152,15 +163,16 @@
    self)
   )
 
-(setf (get gps_driver::gps_msg :md5sum-) "56500b183a40994074270a0d194f3a1e")
+(setf (get gps_driver::gps_msg :md5sum-) "1ce1afae49c3bab36bb9a8d149a4021f")
 (setf (get gps_driver::gps_msg :datatype-) "gps_driver/gps_msg")
 (setf (get gps_driver::gps_msg :definition-)
-      "std_msgs/Header Header
+      "Header Header
 float64 Latitude
 float64 Longitude
 float64 Altitude
 float64 UTM_easting
 float64 UTM_northing
+float64 HDOP
 int64 Zone
 string Letter
 
@@ -184,6 +196,6 @@ string frame_id
 
 
 
-(provide :gps_driver/gps_msg "56500b183a40994074270a0d194f3a1e")
+(provide :gps_driver/gps_msg "1ce1afae49c3bab36bb9a8d149a4021f")
 
 

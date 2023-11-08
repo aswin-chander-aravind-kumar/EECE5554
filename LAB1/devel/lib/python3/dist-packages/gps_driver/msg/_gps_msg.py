@@ -9,15 +9,16 @@ import struct
 import std_msgs.msg
 
 class gps_msg(genpy.Message):
-  _md5sum = "56500b183a40994074270a0d194f3a1e"
+  _md5sum = "1ce1afae49c3bab36bb9a8d149a4021f"
   _type = "gps_driver/gps_msg"
   _has_header = False  # flag to mark the presence of a Header object
-  _full_text = """std_msgs/Header Header
+  _full_text = """Header Header
 float64 Latitude
 float64 Longitude
 float64 Altitude
 float64 UTM_easting
 float64 UTM_northing
+float64 HDOP
 int64 Zone
 string Letter
 
@@ -37,8 +38,8 @@ time stamp
 #Frame this data is associated with
 string frame_id
 """
-  __slots__ = ['Header','Latitude','Longitude','Altitude','UTM_easting','UTM_northing','Zone','Letter']
-  _slot_types = ['std_msgs/Header','float64','float64','float64','float64','float64','int64','string']
+  __slots__ = ['Header','Latitude','Longitude','Altitude','UTM_easting','UTM_northing','HDOP','Zone','Letter']
+  _slot_types = ['std_msgs/Header','float64','float64','float64','float64','float64','float64','int64','string']
 
   def __init__(self, *args, **kwds):
     """
@@ -48,7 +49,7 @@ string frame_id
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       Header,Latitude,Longitude,Altitude,UTM_easting,UTM_northing,Zone,Letter
+       Header,Latitude,Longitude,Altitude,UTM_easting,UTM_northing,HDOP,Zone,Letter
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -69,6 +70,8 @@ string frame_id
         self.UTM_easting = 0.
       if self.UTM_northing is None:
         self.UTM_northing = 0.
+      if self.HDOP is None:
+        self.HDOP = 0.
       if self.Zone is None:
         self.Zone = 0
       if self.Letter is None:
@@ -80,6 +83,7 @@ string frame_id
       self.Altitude = 0.
       self.UTM_easting = 0.
       self.UTM_northing = 0.
+      self.HDOP = 0.
       self.Zone = 0
       self.Letter = ''
 
@@ -104,7 +108,7 @@ string frame_id
         length = len(_x)
       buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
       _x = self
-      buff.write(_get_struct_5dq().pack(_x.Latitude, _x.Longitude, _x.Altitude, _x.UTM_easting, _x.UTM_northing, _x.Zone))
+      buff.write(_get_struct_6dq().pack(_x.Latitude, _x.Longitude, _x.Altitude, _x.UTM_easting, _x.UTM_northing, _x.HDOP, _x.Zone))
       _x = self.Letter
       length = len(_x)
       if python3 or type(_x) == unicode:
@@ -140,8 +144,8 @@ string frame_id
         self.Header.frame_id = str[start:end]
       _x = self
       start = end
-      end += 48
-      (_x.Latitude, _x.Longitude, _x.Altitude, _x.UTM_easting, _x.UTM_northing, _x.Zone,) = _get_struct_5dq().unpack(str[start:end])
+      end += 56
+      (_x.Latitude, _x.Longitude, _x.Altitude, _x.UTM_easting, _x.UTM_northing, _x.HDOP, _x.Zone,) = _get_struct_6dq().unpack(str[start:end])
       start = end
       end += 4
       (length,) = _struct_I.unpack(str[start:end])
@@ -172,7 +176,7 @@ string frame_id
         length = len(_x)
       buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
       _x = self
-      buff.write(_get_struct_5dq().pack(_x.Latitude, _x.Longitude, _x.Altitude, _x.UTM_easting, _x.UTM_northing, _x.Zone))
+      buff.write(_get_struct_6dq().pack(_x.Latitude, _x.Longitude, _x.Altitude, _x.UTM_easting, _x.UTM_northing, _x.HDOP, _x.Zone))
       _x = self.Letter
       length = len(_x)
       if python3 or type(_x) == unicode:
@@ -209,8 +213,8 @@ string frame_id
         self.Header.frame_id = str[start:end]
       _x = self
       start = end
-      end += 48
-      (_x.Latitude, _x.Longitude, _x.Altitude, _x.UTM_easting, _x.UTM_northing, _x.Zone,) = _get_struct_5dq().unpack(str[start:end])
+      end += 56
+      (_x.Latitude, _x.Longitude, _x.Altitude, _x.UTM_easting, _x.UTM_northing, _x.HDOP, _x.Zone,) = _get_struct_6dq().unpack(str[start:end])
       start = end
       end += 4
       (length,) = _struct_I.unpack(str[start:end])
@@ -234,9 +238,9 @@ def _get_struct_3I():
     if _struct_3I is None:
         _struct_3I = struct.Struct("<3I")
     return _struct_3I
-_struct_5dq = None
-def _get_struct_5dq():
-    global _struct_5dq
-    if _struct_5dq is None:
-        _struct_5dq = struct.Struct("<5dq")
-    return _struct_5dq
+_struct_6dq = None
+def _get_struct_6dq():
+    global _struct_6dq
+    if _struct_6dq is None:
+        _struct_6dq = struct.Struct("<6dq")
+    return _struct_6dq

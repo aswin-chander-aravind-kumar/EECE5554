@@ -31,6 +31,7 @@ struct gps_msg_
     , Altitude(0.0)
     , UTM_easting(0.0)
     , UTM_northing(0.0)
+    , HDOP(0.0)
     , Zone(0)
     , Letter()  {
     }
@@ -41,6 +42,7 @@ struct gps_msg_
     , Altitude(0.0)
     , UTM_easting(0.0)
     , UTM_northing(0.0)
+    , HDOP(0.0)
     , Zone(0)
     , Letter(_alloc)  {
   (void)_alloc;
@@ -65,6 +67,9 @@ struct gps_msg_
 
    typedef double _UTM_northing_type;
   _UTM_northing_type UTM_northing;
+
+   typedef double _HDOP_type;
+  _HDOP_type HDOP;
 
    typedef int64_t _Zone_type;
   _Zone_type Zone;
@@ -107,6 +112,7 @@ bool operator==(const ::gps_driver::gps_msg_<ContainerAllocator1> & lhs, const :
     lhs.Altitude == rhs.Altitude &&
     lhs.UTM_easting == rhs.UTM_easting &&
     lhs.UTM_northing == rhs.UTM_northing &&
+    lhs.HDOP == rhs.HDOP &&
     lhs.Zone == rhs.Zone &&
     lhs.Letter == rhs.Letter;
 }
@@ -165,12 +171,12 @@ struct MD5Sum< ::gps_driver::gps_msg_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "56500b183a40994074270a0d194f3a1e";
+    return "1ce1afae49c3bab36bb9a8d149a4021f";
   }
 
   static const char* value(const ::gps_driver::gps_msg_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x56500b183a409940ULL;
-  static const uint64_t static_value2 = 0x74270a0d194f3a1eULL;
+  static const uint64_t static_value1 = 0x1ce1afae49c3bab3ULL;
+  static const uint64_t static_value2 = 0x6bb9a8d149a4021fULL;
 };
 
 template<class ContainerAllocator>
@@ -189,12 +195,13 @@ struct Definition< ::gps_driver::gps_msg_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "std_msgs/Header Header\n"
+    return "Header Header\n"
 "float64 Latitude\n"
 "float64 Longitude\n"
 "float64 Altitude\n"
 "float64 UTM_easting\n"
 "float64 UTM_northing\n"
+"float64 HDOP\n"
 "int64 Zone\n"
 "string Letter\n"
 "\n"
@@ -237,6 +244,7 @@ namespace serialization
       stream.next(m.Altitude);
       stream.next(m.UTM_easting);
       stream.next(m.UTM_northing);
+      stream.next(m.HDOP);
       stream.next(m.Zone);
       stream.next(m.Letter);
     }
@@ -270,6 +278,8 @@ struct Printer< ::gps_driver::gps_msg_<ContainerAllocator> >
     Printer<double>::stream(s, indent + "  ", v.UTM_easting);
     s << indent << "UTM_northing: ";
     Printer<double>::stream(s, indent + "  ", v.UTM_northing);
+    s << indent << "HDOP: ";
+    Printer<double>::stream(s, indent + "  ", v.HDOP);
     s << indent << "Zone: ";
     Printer<int64_t>::stream(s, indent + "  ", v.Zone);
     s << indent << "Letter: ";

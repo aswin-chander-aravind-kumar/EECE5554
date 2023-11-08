@@ -8,16 +8,18 @@ from std_msgs.msg import Float64
 from std_msgs.msg import String
 from std_msgs.msg import Header
 from gps_driver.msg import gps_msg
+import sys
+import argparse
 
 
 if __name__ == '__main__':
 	SENSOR_NAME = 'gps'
 	rospy.init_node('gps_node',anonymous = True)
-	serial_port = rospy.get_param('~port','/dev/pts/2')
+	port = rospy.get_param('driver/port')
 	serial_baud = rospy.get_param('~baudrate',4800)
 	sampling_rate = rospy.get_param('~sampling_rate',1.0)
 
-	port = serial.Serial(serial_port, serial_baud, timeout=3.)
+	port = serial.Serial(port, serial_baud, timeout=3.)
 
 	gps_pub = rospy.Publisher('gps',gps_msg, queue_size=10)
 	
@@ -66,7 +68,7 @@ if __name__ == '__main__':
 					
 					gps_msg_fields.Latitude = lat_dec
 					gps_msg_fields.Longitude = lon_dec
-					gps_msg_fields.HDOP = gps_data_input[8]
+					gps_msg_fields.HDOP = float(gps_data_input[8])
 					gps_msg_fields.Altitude = float(gps_data_input[9])
 					gps_msg_fields.UTM_northing = UTM_conv[1]
 					gps_msg_fields.UTM_easting = UTM_conv[0]

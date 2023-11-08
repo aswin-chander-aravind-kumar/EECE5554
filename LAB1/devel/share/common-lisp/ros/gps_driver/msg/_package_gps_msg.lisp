@@ -11,6 +11,8 @@
           UTM_EASTING
           UTM_NORTHING-VAL
           UTM_NORTHING
+          HDOP-VAL
+          HDOP
           ZONE-VAL
           ZONE
           LETTER-VAL
