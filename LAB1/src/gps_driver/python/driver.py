@@ -40,34 +40,42 @@ if __name__ == '__main__':
 					if gps_data_input[3]=='N':
 						if gps_data_input[2] !='':
 							north_south=1
-							lat_dec = (float(gps_data_input[2]))/100
-							lat_dec = lat_dec + ((float(gps_data_input[2]))-(lat_dec * 100))/60
-							lat_dec = north_south*lat_dec
+							lat = float(gps_data_input[2])
+							lat_dec_1 = int(lat/100)
+							lat_dec_2 = float(lat - (lat_dec_1*100))
+							lat_con = float(lat_dec_1+float(lat_dec_2/60))
+							lat_con = north_south*lat_con
 					else:
 						if gps_data_input[2] !='':
 							north_south=-1
-							lat_dec = (float(gps_data_input[2]))/100
-							lat_dec = lat_dec + ((float(gps_data_input[2]))-(lat_dec * 100))/60
-							lat_dec = north_south*lat_dec
+							lat_dec_1 = (float(gps_data_input[2])/100)
+							lat_dec_2 = float((gps_data_input[2]) - (lat_dec_1*100))
+							lat_con = float(lat_dec_1+float(lat_dec_2/60))
+							lat_con = north_south*lat_con
 					if gps_data_input[5]=='E':
 						if gps_data_input[4] !='':
 							east_west=1
-							lon_dec = (float(gps_data_input[4]))/100
-							lon_dec = lon_dec + (float((gps_data_input[4]))-(lon_dec * 100))/60
-							lon_dec = east_west*lon_dec
+							lon = float(gps_data_input[4])
+							lon_dec_1 = int(lon/100)
+							lon_dec_2 = float(lon - (lon_dec_1*100))
+							lon_con = float(lon_dec_1+float(lon_dec_2/60))
+							lon_con = east_west*lon_con
 					else:
 						if gps_data_input[4] !='':
 							east_west=-1
-							lon_dec = (float(gps_data_input[4]))/100
-							lon_dec = lon_dec + (float((gps_data_input[4]))-(lon_dec * 100))/60
-							lon_dec = east_west*lon_dec
-					
-					UTM_conv = utm.from_latlon(lat_dec, lon_dec)
+							lon = float(gps_data_input[4])
+							lon_dec_1 = int(lon/100)
+							lon_dec_2 = float(lon - (lon_dec_1*100))
+							lon_con = float(lon_dec_1+float(lon_dec_2/60))
+							lon_con = east_west*lon_con
+							
+							
+					UTM_conv = utm.from_latlon(lat_con, lon_con)
 					gps_msg_fields = gps_msg()
 				
 					
-					gps_msg_fields.Latitude = lat_dec
-					gps_msg_fields.Longitude = lon_dec
+					gps_msg_fields.Latitude = lat_con
+					gps_msg_fields.Longitude = lon_con
 					gps_msg_fields.HDOP = float(gps_data_input[8])
 					gps_msg_fields.Altitude = float(gps_data_input[9])
 					gps_msg_fields.UTM_northing = UTM_conv[1]
@@ -77,7 +85,7 @@ if __name__ == '__main__':
 					time = gps_data_input[1]
 					time_sec=(float(time[:2])*3600)+(float(time[2:4])*60)+float(time[4:6])
 					gps_msg_fields.Header.stamp.secs = int(time_sec)
-					time_nsec = float(time[6:])*10e9
+					time_nsec = float(time[6:])*10e8
 					gps_msg_fields.Header.stamp.nsecs = int(time_nsec)
 					
 					gps_msg_fields.Header.frame_id = 'GPS1_Frame'
