@@ -13,7 +13,7 @@ import numpy as np
 #path = "/home/aswin_chander/EECE5554/LAB1/src/Data/Occluded.bag"
 #bag = bagreader(path)
 #Uncomment below for plotting walking data
-path = "/home/aswin_chander/EECE5554/LAB1/src/Data/Walking.bag"
+path = "/home/aswin_chander/EECE5554/LAB1/src/Data/output.bag"
 bag = bagreader(path)
 
 bag.topic_table
