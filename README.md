@@ -2,9 +2,9 @@
 
 I worked on different lab projects, learning a lot about how robots percieve and move. The hands-on experiences gave me a practical understanding of how the sensors work, intergration of the sensors, and expanded my knowledge in the exciting world of robotics.
 
-(a.) Hardware Used : GPS based GNSS puck, RTK GPS, VectorNav IMU, Lidar,and Cameras
-(b.) Softwares Used: Linux, ROS, Github, Matlab,and Python
-(c.) Skills Acquired : Statistical Analysis, Real-Time Data Processing, Device Driver Creation, Data Visualization, Parameter Identification, Image Mosiacing, Corner Feature Identification, Sensor Fusion,and Hardware Calibration.
+**(a.) Hardware Used :** GPS based GNSS puck, RTK GPS, VectorNav IMU, Lidar,and Cameras
+**(b.) Softwares Used:** Linux, ROS, Github, Matlab,and Python
+**(c.) Skills Acquired :** Statistical Analysis, Real-Time Data Processing, Device Driver Creation, Data Visualization, Parameter Identification, Image Mosiacing, Corner Feature Identification, Sensor Fusion,and Hardware Calibration.
 
 ## 1. Lab 0 : Establishing ROS and Linux: Installation and Configuration 
 
